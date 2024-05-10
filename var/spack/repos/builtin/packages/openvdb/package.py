@@ -48,7 +48,7 @@ class Openvdb(CMakePackage):
     depends_on("intel-tbb@2021", when="@8.2:")
     depends_on("zlib-api")
     depends_on("c-blosc@1.17.0")  # depends_on('c-blosc@1.5:')
-    depends_on("python@3:", when="@11:")
+    depends_on("python@3:", when="+python @11:") # OpenVDB's release notes don't specify whether this only applies to the `+python` variant.
     depends_on("py-numpy", when="+python")
     depends_on("boost+iostreams+system+python+numpy", when="+python @:10.0")
     depends_on("boost+iostreams+system+numpy", when="+python @10.1:")
