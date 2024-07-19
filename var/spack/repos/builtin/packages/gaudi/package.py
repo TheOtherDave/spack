@@ -39,6 +39,8 @@ class Gaudi(CMakePackage):
     version("36.0", sha256="8a0458cef5b616532f9db7cca9fa0e892e602b64c9e93dc0cc6d972e03034830")
     version("35.0", sha256="c01b822f9592a7bf875b9997cbeb3c94dea97cb13d523c12649dbbf5d69b5fa6")
 
+    depends_on("cxx", type="build")  # generated
+
     maintainers("drbenmorgan", "vvolkl", "jmcarcell")
 
     variant("aida", default=False, description="Build AIDA interfaces support")
@@ -65,6 +67,12 @@ class Gaudi(CMakePackage):
         sha256="b05f6b7c1efb8c3af291c8d81fd1627e58af7c5f9a78a0098c6e3bfd7ec80c15",
         when="@37.1 ^catch2@3.1:",
     )
+    # add missing <list> include for newer compilers
+    patch(
+        "https://gitlab.cern.ch/gaudi/Gaudi/-/commit/54b727f08a685606420703098131b387d3026637.diff",
+        sha256="41aa1587a3e59d49e0fa9659577073c091871c2eca1b8b237c177ab98fbacf3f",
+        when="@:38.1",
+    )
 
     # These dependencies are needed for a minimal Gaudi build
     depends_on("aida")
@@ -83,7 +91,7 @@ class Gaudi(CMakePackage):
     depends_on("tbb", when="@37.1:")
     depends_on("uuid")
     depends_on("nlohmann-json")
-    depends_on("python", type=("build", "run"))
+    depends_on("python +dbm", type=("build", "run"))
     depends_on("py-networkx", type=("build", "run"))
     depends_on("py-six", type=("build", "run"))
     depends_on("py-pyyaml", type=("build", "run", "test"))
