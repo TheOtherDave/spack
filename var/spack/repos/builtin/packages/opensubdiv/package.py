@@ -21,6 +21,7 @@ class Opensubdiv(CMakePackage, CudaPackage):
     license("Apache-2.0")
 
     version("develop", branch="dev")
+    version("3.6.0", sha256="bebfd61ab6657a4f4ff27845fb66a167d00395783bfbd253254d87447ed1d879")
     version("3.5.1", sha256="42c7c89ffa552f37e9742d1ecfa4bd1d6a2892e01b68fc156775d104154d3d43")
     version("3.5.0", sha256="8f5044f453b94162755131f77c08069004f25306fd6dc2192b6d49889efb8095")
     version("3.4.3", sha256="7b22eb27d636ab0c1e03722c7a5a5bd4f11664ee65c9b48f341a6d0ce7f36745")
