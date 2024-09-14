@@ -45,9 +45,9 @@ class Openvdb(CMakePackage):
     depends_on("ilmbase@2.3:3.1", when="@10:")
     depends_on("openexr", when="@8:9")
     depends_on("openexr@2.3:3.1", when="@10")
-    depends_on("openexr@3:", when="@11:")
+    depends_on("openexr@3.1:", when="@11:")
     depends_on("intel-tbb@:2020.1", when="@:8.1")
-    depends_on("intel-tbb@2021", when="@8.2:")
+    depends_on("intel-tbb@2020.1:", when="@8.2:")
     depends_on("zlib-api")
     depends_on("c-blosc@1.17.0")  # depends_on('c-blosc@1.5:')
     depends_on("python@3:", when="+python @11:") # OpenVDB's release notes don't specify whether this only applies to the `+python` variant.
@@ -61,7 +61,7 @@ class Openvdb(CMakePackage):
     # AX requires quite a few things, and hasn't been properly released
     # yet. I've only managed to build llvm@8.0.1 under centos8. It
     # looks like the next version of OpenVDB will support llvm@12.0.0.
-    depends_on("llvm@8.0.1", when="+ax")
+    depends_on("llvm@8.0.1:14", when="+ax")
     depends_on("bison", when="+ax")
     depends_on("flex", when="+ax")
     depends_on("git", type="build", when="@develop")
