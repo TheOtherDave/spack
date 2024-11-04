@@ -25,15 +25,16 @@ class Openvdb(CMakePackage):
     version("12.0.0", sha256="23ceb5b18a851f45af118f718a9dd3001efaee364e3f623c37ffbdad03b8905f") # FIXME
     version("11.0.0", sha256="6314ff1db057ea90050763e7b7d7ed86d8224fcd42a82cdbb9c515e001b96c74")
     version("10.1.0", sha256="2746236e29659a0d35ab90d832f7c7987dd2537587a1a2f9237d9c98afcd5817")
-    version("10.0.1", sha256="887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f")
-    version("10.0.0", sha256="6d4f6b5ccd0f9d35a4886d9a51a98c97fa314f75bf9737c5121e91b706e2db70")
-    version("9.1.0", sha256="914ee417b4607c75c95b53bc73a0599de4157c7d6a32e849e80f24e40fb64181")
-    version("9.0.0", sha256="ad3816e8f1931d1d6fdbddcec5a1acd30695d049dd10aa965096b2fb9972b468") # FIXME
-    version("8.2.0", sha256="d2e77a0720db79e9c44830423bdb013c24a1cf50994dd61d570b6e0c3e0be699")
-    version("8.1.0", sha256="3e09d47331429be7409a3a3c27fdd3c297f96d31d2153febe194e664a99d6183") # FIXME
-    version("8.0.1", sha256="a6845da7c604d2c72e4141c898930ac8a2375521e535f696c2cd92bebbe43c4f")
-    version("7.2.3", sha256="3087f4f31c844a6e8c7d7c93d396998cd052b1ef196e3510c0e33eaccbf5af0b") # FIXME
-    version("7.1.0", sha256="0c3588c1ca6e647610738654ec2c6aaf41a203fd797f609fbeab1c9f7c3dc116")
+#     version("10.0.1", sha256="887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f")
+#     version("10.0.0", sha256="6d4f6b5ccd0f9d35a4886d9a51a98c97fa314f75bf9737c5121e91b706e2db70")
+#     version("9.1.0", sha256="914ee417b4607c75c95b53bc73a0599de4157c7d6a32e849e80f24e40fb64181")
+#     version("9.0.0", sha256="ad3816e8f1931d1d6fdbddcec5a1acd30695d049dd10aa965096b2fb9972b468") # FIXME
+#     version("8.2.0", sha256="d2e77a0720db79e9c44830423bdb013c24a1cf50994dd61d570b6e0c3e0be699")
+#     version("8.1.0", sha256="3e09d47331429be7409a3a3c27fdd3c297f96d31d2153febe194e664a99d6183") # FIXME
+#     version("8.0.1", sha256="a6845da7c604d2c72e4141c898930ac8a2375521e535f696c2cd92bebbe43c4f")
+#     version("7.2.3", sha256="3087f4f31c844a6e8c7d7c93d396998cd052b1ef196e3510c0e33eaccbf5af0b") # FIXME
+#     version("7.1.0", sha256="0c3588c1ca6e647610738654ec2c6aaf41a203fd797f609fbeab1c9f7c3dc116")
+
 
     depends_on("cxx", type="build")  # generated
 
