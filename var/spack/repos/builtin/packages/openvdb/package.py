@@ -22,6 +22,7 @@ class Openvdb(CMakePackage):
     license("MPL-2.0")
 
     version("develop", branch="develop")
+    version("12.0.0", sha256="23ceb5b18a851f45af118f718a9dd3001efaee364e3f623c37ffbdad03b8905f")
     version("11.0.0", sha256="6314ff1db057ea90050763e7b7d7ed86d8224fcd42a82cdbb9c515e001b96c74")
     version("10.1.0", sha256="2746236e29659a0d35ab90d832f7c7987dd2537587a1a2f9237d9c98afcd5817")
     version("10.0.1", sha256="887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f")
@@ -42,10 +43,11 @@ class Openvdb(CMakePackage):
     variant("ax", default=False, description="Build the AX extension (untested).")
 
     depends_on("ilmbase", when="@8:9")
-    depends_on("ilmbase@2.3:3.1", when="@10:")
+    depends_on("ilmbase@2.3:3.1", when="@10.0")
     depends_on("openexr", when="@8:9")
     depends_on("openexr@2.3:3.1", when="@10")
-    depends_on("openexr@3.1:", when="@11:")
+    depends_on("openexr@3.1:", when="@11")
+    depends_on("openexr@3.3:", when="@12")
     depends_on("intel-tbb@:2020.1", when="@:8.1")
     depends_on("intel-tbb@2020.1:", when="@8.2:")
     depends_on("zlib-api")
@@ -54,7 +56,8 @@ class Openvdb(CMakePackage):
     depends_on("py-numpy", when="+python")
     depends_on("boost+iostreams+system+python+numpy", when="+python @:10.0")
     depends_on("boost+iostreams+system+numpy", when="+python @10.1:")
-    depends_on("py-pybind11", when="+python @10.1:")
+    depends_on("py-pybind11", when="+python @10.1:11")
+    depends_on("py-nanobind", when="+python @12")
     depends_on("boost+iostreams+system", when="~python")
     extends("python", when="+python")
 
