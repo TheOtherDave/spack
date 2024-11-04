@@ -1,0 +1,183 @@
+# Copyright 2013-2024 Lawrence Livermore National Security, LLC and other
+# Spack Project Developers. See the top-level COPYRIGHT file for details.
+#
+# SPDX-License-Identifier: (Apache-2.0 OR MIT)
+
+import os
+import sys
+
+from spack.package import *
+
+
+class Openvdb(CMakePackage):
+    """OpenVDB - a sparse volume data format."""
+
+    homepage = "https://github.com/AcademySoftwareFoundation/openvdb"
+    url = "https://github.com/AcademySoftwareFoundation/openvdb/archive/v10.0.0.tar.gz"
+    git = "https://github.com/AcademySoftwareFoundation/openvdb.git"
+
+    # Github account name for drew@lagrangian.xyz
+    maintainers("eloop")
+
+    license("MPL-2.0")
+
+    version("develop", branch="develop")
+    version("12.0.0", sha256="23ceb5b18a851f45af118f718a9dd3001efaee364e3f623c37ffbdad03b8905f") # FIXME
+    version("11.0.0", sha256="6314ff1db057ea90050763e7b7d7ed86d8224fcd42a82cdbb9c515e001b96c74")
+    version("10.1.0", sha256="2746236e29659a0d35ab90d832f7c7987dd2537587a1a2f9237d9c98afcd5817")
+    version("10.0.1", sha256="887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f")
+    version("10.0.0", sha256="6d4f6b5ccd0f9d35a4886d9a51a98c97fa314f75bf9737c5121e91b706e2db70")
+    version("9.1.0", sha256="914ee417b4607c75c95b53bc73a0599de4157c7d6a32e849e80f24e40fb64181")
+    version("9.0.0", sha256="ad3816e8f1931d1d6fdbddcec5a1acd30695d049dd10aa965096b2fb9972b468") # FIXME
+    version("8.2.0", sha256="d2e77a0720db79e9c44830423bdb013c24a1cf50994dd61d570b6e0c3e0be699")
+    version("8.1.0", sha256="3e09d47331429be7409a3a3c27fdd3c297f96d31d2153febe194e664a99d6183") # FIXME
+    version("8.0.1", sha256="a6845da7c604d2c72e4141c898930ac8a2375521e535f696c2cd92bebbe43c4f")
+    version("7.2.3", sha256="3087f4f31c844a6e8c7d7c93d396998cd052b1ef196e3510c0e33eaccbf5af0b") # FIXME
+    version("7.1.0", sha256="0c3588c1ca6e647610738654ec2c6aaf41a203fd797f609fbeab1c9f7c3dc116")
+
+    depends_on("cxx", type="build")  # generated
+
+    # these variants were for 8.0.1 and probably could be updated...
+    variant("shared", default=True, description="Build as a shared library.")
+    variant("python", default=False, description="Build the pyopenvdb python extension.")
+    variant("vdb_print", default=False, description="Build the vdb_print tool.")
+    variant("vdb_lod", default=False, description="Build the vdb_lod tool.")
+    variant("vdb_render", default=False, description="Build the vdb_render tool.")
+    variant("ax", default=False, description="Build the AX extension (untested).")
+
+    depends_on("cmake@3.18:", type="build", when="@10.1.0")
+    depends_on("ilmbase@2.4:Removed", when="@10.1.0")
+    depends_on("openexr@2.4:3.1", when="@10.1.0")
+    depends_on("intel-tbb@2020.2:2020.3", when="@10.1.0")
+    depends_on("zlib@1.2.7:", when="@10.1.0")
+    depends_on("boost@1.73:1.76+iostreams+system", when="~python @10.1.0")
+    depends_on("boost@1.73:1.76+iostreams+system+python+numpy", when="+python @10.1.0")
+    depends_on("llvm@10.0.0)", when="+ax @10.1.0")
+    depends_on("bison@3.0.0:3.7.0", when="+ax @10.1.0")
+    depends_on("flex@2.6.0:2.6.4", when="+ax @10.1.0")
+    depends_on("python@3.7)", when="+python @10.1.0")
+    depends_on("py-pybind11@2.9.1:", when="+python @10.1.0")
+    depends_on("py-numpy@1.19.0:1.20.0", when="+python @10.1.0")
+    depends_on("googletest@1.10:", when="@10.1.0")
+    depends_on("cppunit@1.10:", when="@10.1.0")
+    depends_on("c-blosc@1.17.0)", when="@10.1.0")
+    depends_on("log4cplus@1.1.2:", when="@10.1.0")
+    depends_on("libpng@:", when="@10.1.0")
+    depends_on("glfw@3.1:", when="+vdb_view @10.1.0")
+    depends_on("opengl@3.2:", when="+vdb_view @10.1.0")
+    depends_on("glew@1.0.0:", when="+vdb_view @10.1.0")
+    depends_on("doxygen@1.8.8:1.8.11", when="@10.1.0")
+
+    depends_on("cmake@3.18:", type="build", when="@11.0.0")
+    depends_on("imath@3.1:", when="@11.0.0")
+    depends_on("openexr@3.1:", when="@11.0.0")
+    depends_on("intel-tbb@2020.2:2020.3", when="@11.0.0")
+    depends_on("zlib@1.2.7:", when="@11.0.0")
+    depends_on("boost@1.73:1.80+iostreams+system", when="~python @11.0.0")
+    depends_on("boost@1.73:1.80+iostreams+system+python+numpy", when="+python @11.0.0")
+    depends_on("llvm@10.0.0:13.0.0", when="+ax @11.0.0")
+    depends_on("bison@3.0.0:3.7.0", when="+ax @11.0.0")
+    depends_on("flex@2.6.0:2.6.4", when="+ax @11.0.0")
+    depends_on("python@3.9.1:3.10", when="+python @11.0.0")
+    depends_on("py-pybind11@2.9.1:", when="+python @11.0.0")
+    depends_on("py-numpy@1.20.0:1.23.0", when="+python @11.0.0")
+    depends_on("googletest@1.10:", when="@11.0.0")
+    depends_on("cppunit@1.10:", when="@11.0.0")
+    depends_on("c-blosc@1.17.0)", when="@11.0.0")
+    depends_on("log4cplus@1.1.2:", when="@11.0.0")
+    depends_on("libpng@:", when="@11.0.0")
+    depends_on("glfw@> 3.3", when="+vdb_view @11.0.0")
+    depends_on("opengl@3.2:", when="+vdb_view @11.0.0")
+    depends_on("glew@1.0.0:", when="+vdb_view @11.0.0")
+    depends_on("doxygen@1.8.8:1.8.11", when="@11.0.0")
+
+    depends_on("cmake@3.20:", type="build", when="@12.0.0")
+    depends_on("imath@3.1:", when="@12.0.0")
+    depends_on("openexr@3.1:", when="@12.0.0")
+    depends_on("intel-tbb@2020.3)", when="@12.0.0")
+    depends_on("zlib@1.2.7:", when="@12.0.0")
+    depends_on("boost@1.80:1.82+iostreams+system", when="~python @12.0.0")
+    depends_on("boost@1.80:1.82+iostreams+system+python+numpy", when="+python @12.0.0")
+    depends_on("llvm@13.0.0:15.0.0", when="+ax @12.0.0")
+    depends_on("bison@3.7.0)", when="+ax @12.0.0")
+    depends_on("flex@2.6.4)", when="+ax @12.0.0")
+    depends_on("python@3.10:3.11", when="+python @12.0.0")
+    depends_on("py-nanobind@2.0.0:2.1.0", when="+python @12.0.0")
+    depends_on("py-numpy@1.23.0:1.26.0", when="+python @12.0.0")
+    depends_on("googletest@1.10:", when="@12.0.0")
+    depends_on("cppunit@1.10:", when="@12.0.0")
+    depends_on("c-blosc@1.17.0)", when="@12.0.0")
+    depends_on("log4cplus@1.1.2:", when="@12.0.0")
+    depends_on("libpng@:", when="@12.0.0")
+    depends_on("glfw@> 3.3", when="+vdb_view @12.0.0")
+    depends_on("opengl@3.2:", when="+vdb_view @12.0.0")
+    depends_on("glew@1.0.0:", when="+vdb_view @12.0.0")
+    depends_on("doxygen@1.8.8:1.8.11", when="@12.0.0")
+
+
+# 	depends_on("cmake@3.18:", type="build", when="@10:11")
+# 	depends_on("cmake@3.20:", type="build", when="@12")
+# 	depends_on("boost@1.73:1.80 +iostreams", when="@11")
+# 	depends_on("boost@1.80:1.82 +iostreams", when="@12")
+# 	depends_on("imath@3.1:", when="@11")
+# 	depends_on("openexr@3.1:", when="@11")
+# 	depends_on("tbb@2020.2:2020.3", when="@11")
+# 	
+#     depends_on("ilmbase", when="@8:9")
+#     depends_on("ilmbase@2.3:3.1", when="@10:11")
+#     depends_on("openexr", when="@8:9")
+#     depends_on("openexr@2.3:3.1", when="@10")
+#     depends_on("openexr@3.1:", when="@11:")
+#     depends_on("intel-tbb@:2020.1", when="@:8.1")
+#     depends_on("intel-tbb@2020.1:", when="@8.2:")
+#     depends_on("zlib-api")
+#     depends_on("c-blosc@1.17.0")  # depends_on('c-blosc@1.5:')
+#     depends_on("python@3:", when="+python @11:") # OpenVDB's release notes don't specify whether this only applies to the `+python` variant.
+#     depends_on("py-numpy", when="+python")
+#     depends_on("boost+iostreams+system+python+numpy", when="+python @:10.0")
+#     depends_on("boost+iostreams+system+numpy", when="+python @10.1:")
+#     depends_on("py-pybind11", when="+python @10.1:")
+#     depends_on("boost+iostreams+system", when="~python")
+    extends("python", when="+python")
+
+    # AX requires quite a few things, and hasn't been properly released
+    # yet. I've only managed to build llvm@8.0.1 under centos8. It
+    # looks like the next version of OpenVDB will support llvm@12.0.0.
+#     depends_on("llvm@8.0.1:14", when="+ax")
+#     depends_on("bison", when="+ax")
+#     depends_on("flex", when="+ax")
+    depends_on("git", type="build", when="@develop")
+
+    def cmake_args(self):
+        args = [
+            self.define("OPENVDB_BUILD_CORE", True),
+            self.define_from_variant("BUILD_SHARED_LIBS", "shared"),
+            self.define_from_variant("OPENVDB_BUILD_VDB_PRINT", "vdb_print"),
+            self.define_from_variant("OPENVDB_BUILD_VDB_LOD", "vdb_lod"),
+            self.define_from_variant("OPENVDB_BUILD_VDB_RENDER", "vdb_render"),
+            self.define_from_variant("OPENVDB_BUILD_AX", "ax"),
+            self.define_from_variant("OPENVDB_BUILD_AX_BINARIES", "ax"),
+            self.define_from_variant("OPENVDB_BUILD_PYTHON_MODULE", "python"),
+            self.define_from_variant("USE_NUMPY", "python"),
+        ]
+        return args
+
+    # Before v8.2.0 the python extension is being installed in the
+    # wrong directory by OpenVDB's cmake, instead it needs to be in
+    # python_platlib. And for RHEL systems we find the dso in
+    # lib64/ instead of lib/.
+    @run_after("install")
+    def post_install(self):
+        spec = self.spec
+        if "+python" in spec and spec.satisfies("@:8.0.1"):
+            if sys.platform == "darwin":
+                pyso = "pyopenvdb.dylib"
+            else:
+                pyso = "pyopenvdb.so"
+            pyver = "python{0}".format(spec["python"].package.version.up_to(2))
+
+            src = prefix.lib.join(pyver).join(pyso)
+            if not os.path.isfile(src):
+                src = prefix.lib64.join(pyver).join(pyso)
+            assert os.path.isfile(src)
+            os.rename(src, os.path.join(python_platlib, pyso))
