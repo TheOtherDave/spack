@@ -87,6 +87,8 @@ from spack.spec import Spec
 from spack.stage import Stage
 from spack.util.executable import which
 
+from .enums import InstallRecordStatus
+
 BUILD_CACHE_RELATIVE_PATH = "build_cache"
 BUILD_CACHE_KEYS_RELATIVE_PATH = "_pgp"
 
@@ -252,7 +254,7 @@ class BinaryCacheIndex:
 
             spec_list = [
                 s
-                for s in db.query_local(installed=any)
+                for s in db.query_local(installed=InstallRecordStatus.ANY)
                 if s.external or db.query_local_by_spec_hash(s.dag_hash()).in_buildcache
             ]
 
@@ -2332,7 +2334,9 @@ def relocate_package(spec):
             if not codesign:
                 return
             for binary in changed_files:
-                codesign("-fs-", binary)
+                # preserve the original inode by running codesign on a copy
+                with fsys.edit_in_place_through_temporary_file(binary) as tmp_binary:
+                    codesign("-fs-", tmp_binary)
 
     # If we are installing back to the same location
     # relocate the sbang location if the spack directory changed
