@@ -48,7 +48,8 @@ class Openvdb(CMakePackage):
     depends_on("openexr@3.1:", when="@11")
     depends_on("openexr@3.3:", when="@12")
     depends_on("intel-tbb@:2020.1", when="@:8.1")
-    depends_on("intel-tbb@2020.1:", when="@8.2:")
+    depends_on("intel-tbb@2020.1:", when="@8.2:11")
+    depends_on("intel-oneapi-tbb@2020.1", when="@12:")
     depends_on("zlib-api")
     depends_on("c-blosc@1.17.0")  # depends_on('c-blosc@1.5:')
     depends_on("python@3:", when="+python @11:") # OpenVDB's release notes don't specify whether this only applies to the `+python` variant.
